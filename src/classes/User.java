@@ -11,12 +11,12 @@ package classes;
  */
 
 public class User {
-    private int id_user,age;
+    private int id_user,age,etat;
     private String username,mail,mdp,image;
-    private String role;
+    private String roles,reset_token;
     private String sexe;
 
-    public User(int id_user, String username, String mail, String mdp, String role, String image,int age, String sexe) {
+    public User(int id_user, String username, String mail, String mdp, String roles, String image,int age, String sexe) {
         this.id_user = id_user;
         this.age = age;
         this.username = username;
@@ -24,17 +24,28 @@ public class User {
         this.mdp = mdp;
         this.image = image;
         this.sexe = sexe;
-        this.role = role;
+        this.roles = roles;        
+        
     }
 
-    public User( String username, String mail, String mdp, String role, String image,int age, String sexe) {
+    public User( String username, String mail, String mdp, String roles, String image,int age, String sexe) {
         this.age = age;
         this.username = username;
         this.mail = mail;
         this.mdp = mdp;
         this.image = image;
         this.sexe = sexe;
-        this.role = role;
+        this.roles = roles;
+        
+
+    }
+
+    public String getReset_token() {
+        return reset_token;
+    }
+
+    public void setReset_token(String reset_token) {
+        this.reset_token = reset_token;
     }
 
     public User() {
@@ -54,6 +65,14 @@ public class User {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public int getEtat() {
+        return etat;
+    }
+
+    public void setEtat(int etat) {
+        this.etat = etat;
     }
 
     public String getUsername() {
@@ -97,16 +116,16 @@ public class User {
     }
 
     public String getRole() {
-        return role;
+        return roles;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRole(String roles) {
+        this.roles = roles;
     }
 
     @Override
     public String toString() {
-        return "User{" + "username=" + username + ", mail=" + mail + ", role=" + role +  ", age=" + age + '}';
+        return "User{" + "username=" + username + ", mail=" + mail + ", role=" + roles +  ", age=" + age + '}';
     }
 
 

@@ -67,8 +67,8 @@ public class ProfileUserController implements Initializable {
     private PasswordField tf_modif_cfrmmdp;
     @FXML
     private TextField tf_modif_age;
-    @FXML
-    private ComboBox<String> cb_modif_rl;
+ //   @FXML
+   // private ComboBox<String> cb_modif_rl;
     @FXML
     private ComboBox<String> cb_modif_sx;
     
@@ -104,13 +104,13 @@ public class ProfileUserController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
        
         // TODO
-           ObservableList<String> list = FXCollections.observableArrayList("CLIENT","MANAGER");
-           cb_modif_rl.setItems(list);
-           cb_modif_rl.setValue("CLIENT");
+         //  ObservableList<String> list = FXCollections.observableArrayList("CLIENT","MANAGER");
+       //    cb_modif_rl.setItems(list);
+         //  cb_modif_rl.setValue("CLIENT");
            
-           ObservableList<String> listS = FXCollections.observableArrayList("FEMME","HOMME");
+           ObservableList<String> listS = FXCollections.observableArrayList("female","male");
            cb_modif_sx.setItems(listS);
-           cb_modif_sx.setValue("HOMME");
+           cb_modif_sx.setValue("male");
            
         
         ServiceUser su = new ServiceUser();
@@ -124,7 +124,7 @@ public class ProfileUserController implements Initializable {
         tf_modif_mdp.setText(aold.getMdp());
         tf_modif_cfrmmdp.setText(aold.getMdp());
         tf_modif_age.setText(Integer.toString(aold.getAge()));
-        cb_modif_rl.setValue(aold.getRole());
+     //   cb_modif_rl.setValue(aold.getRole());
         cb_modif_sx.setValue(aold.getSexe());
         
         webcam = Webcam.getDefault();
@@ -140,7 +140,7 @@ public class ProfileUserController implements Initializable {
         String mdp1 = tf_modif_mdp.getText();
         String mdp2 = tf_modif_cfrmmdp.getText();
         String age1 = tf_modif_age.getText();
-        String role1 = cb_modif_rl.getSelectionModel().getSelectedItem();
+     //   String role1 = cb_modif_rl.getSelectionModel().getSelectedItem();
         String sexe = cb_modif_sx.getSelectionModel().getSelectedItem();
 
             
@@ -210,7 +210,7 @@ public class ProfileUserController implements Initializable {
             u.setMail(tf_modif_email.getText());
             u.setMdp(mdp1);
             u.setAge(Integer.parseInt(age1));
-            u.setRole(role1);
+        //    u.setRole(role1);
             u.setSexe(sexe);
             u.setImage(ImagePath);
             su.modifier(u);

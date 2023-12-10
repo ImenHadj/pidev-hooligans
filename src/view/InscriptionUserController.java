@@ -66,8 +66,8 @@ public class InscriptionUserController implements Initializable {
     private TextField tf_inscri_age;
     @FXML
     private TextField tf_inscri_image;
-    @FXML
-    private ComboBox<String> cb_inscri_rl;
+  //  @FXML
+   // private ComboBox<String> cb_inscri_rl;
     @FXML
     private ComboBox<String> cb_inscri_sx; 
     private String ImagePath;
@@ -105,15 +105,15 @@ public class InscriptionUserController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         // TODO
-           ObservableList<String> list = FXCollections.observableArrayList("CLIENT","MANAGER");
-           cb_inscri_rl.setItems(list);
-           cb_inscri_rl.setValue("CLIENT");
+         //  ObservableList<String> list = FXCollections.observableArrayList("CLIENT","MANAGER");
+          // cb_inscri_rl.setItems(list);
+           // cb_inscri_rl.setValue("CLIENT");
            
-           ObservableList<String> listS = FXCollections.observableArrayList("FEMME","HOMME");
+           ObservableList<String> listS = FXCollections.observableArrayList("female","male");
            cb_inscri_sx.setItems(listS);
-           cb_inscri_sx.setValue("HOMME");
+           cb_inscri_sx.setValue("male");
            
-        ImagePath = "C:\\Users\\ASUS\\Desktop\\XperienceZoneAPP-Gestion-des-equipements\\pidev hooligans\\src\\view/Profile.jpg";
+        ImagePath = "C:\\Users\\ANIS\\Desktop\\PI_JAVA\\pidev-hooligans\\src\\view/Profile.jpg";
         ImagePreviw.setImage(new Image(new File(ImagePath).toURI().toString()));
           webcam = Webcam.getDefault();
     }        
@@ -125,7 +125,7 @@ public class InscriptionUserController implements Initializable {
         String mdp1 = tf_inscri_mdp.getText();
         String mdp2 = tf_inscri_cfrmmdp.getText();
         String age1 = tf_inscri_age.getText();
-        String role1 = cb_inscri_rl.getSelectionModel().getSelectedItem();
+      //  String role1 = cb_inscri_rl.getSelectionModel().getSelectedItem();
         String sexe = cb_inscri_sx.getSelectionModel().getSelectedItem();
 
             
@@ -202,7 +202,7 @@ public class InscriptionUserController implements Initializable {
             u.setMail(tf_inscri_email.getText());
             u.setMdp(mdp1);
             u.setAge(Integer.parseInt(age1));
-            u.setRole(role1);
+            u.setRole("[\"ROLE_CLIENT\"]");
             u.setSexe(sexe);
             u.setImage(ImagePath);
 
@@ -256,7 +256,7 @@ public class InscriptionUserController implements Initializable {
     @FXML
     private void add_image_action(ActionEvent event) throws IOException {
         FileChooser fc = new FileChooser();
-        File defaultDir = new File("C:/Users/ASUS/Desktop/");
+        File defaultDir = new File("C:\\Users\\ANIS\\Documents");
         fc.setInitialDirectory(defaultDir);
         File SelectedFile = fc.showOpenDialog(null);
 
@@ -377,7 +377,7 @@ private void TakePhotoAction(ActionEvent event) {
     
      private void saveImage(BufferedImage image) {
         try {
-            ImagePath = "C:/Users/ASUS/Desktop/" + tf_inscri_email.getText() + ".png";
+            ImagePath = "C:\\Users\\ANIS\\Documents/" + tf_inscri_email.getText() + ".png";
             File outputfile = new File(ImagePath);
             imageLabel.setText(ImagePath);
             ImageIO.write(image, "png", outputfile);

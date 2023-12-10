@@ -31,16 +31,17 @@ public class ServiceUser implements UService<User> {
     @Override
     public void ajouter(User u) {
          try {
-                String req = "INSERT INTO utilisateur(username,mail,mdp,role,image,age,sexe)values(?,?,?,?,?,?,?)";
+                String req = "INSERT INTO Userr(username,mail,password,roles,image,age,sexe)values(?,?,?,?,?,?,?)";
                 
                 PreparedStatement pre = con.prepareStatement(req); 
                 pre.setString(1,u.getUsername() );
                 pre.setString(2,u.getMail() );
                 pre.setString(3,u.getMdp() );
-                pre.setString(4,u.getRole());
+                pre.setString(4,"[\"\"ROLE_CLIENT\"]");
                 pre.setString(5,u.getImage() );
                 pre.setInt(6,u.getAge() );
                 pre.setString(7,u.getSexe());
+               // pre.setString(9,NULL);
                 
                 pre.executeUpdate();
                  System.out.println("user ajouter successfully!");
@@ -51,7 +52,7 @@ public class ServiceUser implements UService<User> {
 
     @Override
     public void supprimer(int id) {
-     String requete = "DELETE FROM utilisateur WHERE id_user = ?";
+     String requete = "DELETE FROM Userr WHERE id_user = ?";
     try {
         PreparedStatement ps = con.prepareStatement(requete);
         ps.setInt(1, id);
@@ -64,7 +65,7 @@ public class ServiceUser implements UService<User> {
      public void ResetPassword(String email, String password) {
         try {
 
-            String req = "UPDATE utilisateur SET mdp = ? WHERE mail = ?";
+            String req = "UPDATE Userr SET password = ? WHERE mail = ?";
             PreparedStatement ps = con.prepareStatement(req);
 
             ps.setString(1, password);
@@ -81,12 +82,12 @@ public class ServiceUser implements UService<User> {
     @Override
     public void modifier(User u) {
                 try {
-            String req="UPDATE `utilisateur` SET `username` =?,`mail`=? ,`mdp` =?,`role` =? ,`image` =?,`age` =?,`sexe` =? WHERE id_user =?";
+            String req="UPDATE `Userr` SET `username` =?,`mail`=? ,`password` =?,`image` =?,`age` =?,`sexe` =? WHERE id_user =?";
             PreparedStatement pre = con.prepareStatement(req); 
             pre.setString(1,u.getUsername() );
             pre.setString(2,u.getMail() );
             pre.setString(3,u.getMdp() );
-            pre.setString(4,u.getRole());
+            pre.setString(4,"[\"\"ROLE_CLIENT\"]");
             pre.setString(5,u.getImage() );
             pre.setInt(6,u.getAge() );
             pre.setString(7,u.getSexe() );    
@@ -101,13 +102,13 @@ public class ServiceUser implements UService<User> {
     @Override
     public List<User> afficher() {
  List<User> utilisateurs = new ArrayList<>();
-       String sql ="select * from utilisateur";
+       String sql ="select * from Userr";
        try {
           ste= con.createStatement();
             ResultSet rs = ste.executeQuery(sql);
             while(rs.next()){
               User u = new User(rs.getInt("id_user"),
-                      rs.getString("username"), rs.getString("mail"),rs.getString("mdp"), rs.getString("role"),rs.getString("image"), rs.getInt("age"), rs.getString("sexe")); 
+                      rs.getString("username"), rs.getString("mail"),rs.getString("password"), rs.getString("roles"),rs.getString("image"), rs.getInt("age"), rs.getString("sexe")); 
                 utilisateurs.add(u);
             }
         } catch (SQLException ex) {
@@ -121,7 +122,7 @@ public class ServiceUser implements UService<User> {
     boolean result = false;
 
     try {
-        String req = "SELECT * FROM utilisateur WHERE mail = ?";
+        String req = "SELECT * FROM Userr WHERE mail = ?";
         PreparedStatement st = con.prepareStatement(req);
         st.setString(1, email);
         ResultSet rs = st.executeQuery();
@@ -136,13 +137,13 @@ public class ServiceUser implements UService<User> {
     public User readById(int id) {
         User u = null;  
     try  {
-        String req ="SELECT * from utilisateur WHERE id_user= '" + id +"'";
+        String req ="SELECT * from Userr WHERE id_user= '" + id +"'";
         PreparedStatement ps = con.prepareStatement(req);
         ResultSet rs = ps.executeQuery();
         while (rs.next()) {
 
         u= new User(rs.getInt("id_user"),
-                      rs.getString("username"), rs.getString("mail"),rs.getString("mdp"), rs.getString("role"),rs.getString("image"), rs.getInt("age"), rs.getString("sexe")); 
+                      rs.getString("username"), rs.getString("mail"),rs.getString("password"), rs.getString("roles"),rs.getString("image"), rs.getInt("age"), rs.getString("sexe")); 
         }
     } catch (SQLException ex) {
         System.err.println(ex.getMessage());
@@ -152,7 +153,7 @@ public class ServiceUser implements UService<User> {
     
    public User readByEmail(String email) {
     User u = new User();
-    String req = "SELECT * from utilisateur WHERE mail=?";
+    String req = "SELECT * from Userr WHERE mail=?";
     try (PreparedStatement ps = con.prepareStatement(req)) {
         ps.setString(1, email);
         ResultSet rs = ps.executeQuery();
@@ -162,8 +163,8 @@ public class ServiceUser implements UService<User> {
                 rs.getInt("id_user"),
                 rs.getString("username"),
                 rs.getString("mail"),
-                rs.getString("mdp"),
-                rs.getString("role"),
+                rs.getString("password"),
+                rs.getString("roles"),
                 rs.getString("image"),
                 rs.getInt("age"),
                 rs.getString("sexe")
@@ -179,7 +180,7 @@ public int authentification(String email, String password) {
 
         int id = -1;
         User u = new User();
-        String req = "SELECT * from utilisateur WHERE mail = ? && mdp = ?";
+        String req = "SELECT * from Userr WHERE mail = ? && password = ?";
         
         try (PreparedStatement ps = con.prepareStatement(req)){
             ps.setString(1, email);
@@ -198,7 +199,7 @@ public int authentification(String email, String password) {
     public int ChercherMail(String email) {
 
         try {
-            String req = "SELECT * from utilisateur WHERE mail ='" + email + "'  ";
+            String req = "SELECT * from Userr WHERE mail ='" + email + "'  ";
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(req);
             while (rs.next()) {
@@ -214,7 +215,7 @@ public int authentification(String email, String password) {
     }
  
     public User chercherByEmail(String email) {
-    String sql ="SELECT * from utilisateur WHERE mail='"+email+"'";
+    String sql ="SELECT * from Userr WHERE mail='"+email+"'";
     User u = new User();
     try {
             ste= con.createStatement();
@@ -222,7 +223,7 @@ public int authentification(String email, String password) {
         while (rs.next()) {
             
             u = new User(rs.getInt("id_user"),
-                      rs.getString("username"), rs.getString("mail"),rs.getString("mdp"), rs.getString("role"),rs.getString("image"), rs.getInt("age"), rs.getString("sexe"));
+                      rs.getString("username"), rs.getString("mail"),rs.getString("password"), rs.getString("roles"),rs.getString("image"), rs.getInt("age"), rs.getString("sexe"));
         }
     } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -232,7 +233,7 @@ public int authentification(String email, String password) {
 public List<User> searchUsersByEmailStartingWithLetter(String searchAttribute,String startingLetter) {
     List<User> matchingUsers = new ArrayList<>();
     
-    String sql = "SELECT * FROM `utilisateur` WHERE " + searchAttribute + " LIKE ?";
+    String sql = "SELECT * FROM `Userr` WHERE " + searchAttribute + " LIKE ?";
     
     try (PreparedStatement preparedStatement = con.prepareStatement(sql)) {
         preparedStatement.setString(1, startingLetter + "%");
@@ -243,8 +244,8 @@ public List<User> searchUsersByEmailStartingWithLetter(String searchAttribute,St
                 rs.getInt("id_user"),
                 rs.getString("username"),
                 rs.getString("mail"),
-                rs.getString("mdp"),
-                rs.getString("role"),
+                rs.getString("password"),
+                rs.getString("roles"),
                 rs.getString("image"),
                 rs.getInt("age"),
                 rs.getString("sexe")
@@ -262,7 +263,7 @@ public List<User> searchUsersByEmailStartingWithLetter(String searchAttribute,St
 
         try {
 
-            String req = "UPDATE utilisateur SET username = ? WHERE id_user = ?";
+            String req = "UPDATE Userr SET username = ? WHERE id_user = ?";
             PreparedStatement ps = con.prepareStatement(req);
             ps.setString(1, p.getUsername());
             ps.setInt(2, p.getId_user());
@@ -278,7 +279,7 @@ public List<User> searchUsersByEmailStartingWithLetter(String searchAttribute,St
 
         try {
 
-            String req = "UPDATE utilisateur SET age = ? WHERE id_user = ?";
+            String req = "UPDATE Userr SET age = ? WHERE id_user = ?";
 
             PreparedStatement ps = con.prepareStatement(req);
             ps.setInt(1, p.getAge());
@@ -296,7 +297,7 @@ public List<User> searchUsersByEmailStartingWithLetter(String searchAttribute,St
         if (ChercherMail(p.getMail()) == -1) {
             try {
 
-                String req = "UPDATE utilisateur SET mail = ? WHERE id_user = ?";
+                String req = "UPDATE Userr SET mail = ? WHERE id_user = ?";
                 PreparedStatement ps = con.prepareStatement(req);
                 ps.setString(1, p.getMail());
                 ps.setInt(2, p.getId_user());
@@ -315,7 +316,7 @@ public List<User> searchUsersByEmailStartingWithLetter(String searchAttribute,St
 
         try {
 
-            String req = "UPDATE utilisateur SET mdp = ? WHERE id_user = ?";
+            String req = "UPDATE Userr SET password = ? WHERE id_user = ?";
 
             PreparedStatement ps = con.prepareStatement(req);
             ps.setString(1, p.getMdp());
@@ -332,7 +333,7 @@ public List<User> searchUsersByEmailStartingWithLetter(String searchAttribute,St
 
         try {
 
-            String req = "UPDATE utilisateur SET image = ? WHERE id_user = ?";
+            String req = "UPDATE Userr SET image = ? WHERE id_user = ?";
             PreparedStatement ps = con.prepareStatement(req);
             ps.setString(1, p.getImage());
             ps.setInt(2, p.getId_user());
@@ -347,7 +348,7 @@ public List<User> searchUsersByEmailStartingWithLetter(String searchAttribute,St
 
 
 public List<User> chercherByEmailTV(String email) {
-    String sql = "SELECT * FROM utilisateur WHERE mail = ?";
+    String sql = "SELECT * FROM Userr WHERE mail = ?";
     List<User> userList = new ArrayList<>();
 
     try {
@@ -360,8 +361,8 @@ public List<User> chercherByEmailTV(String email) {
                 rs.getInt("id_user"),
                 rs.getString("username"),
                 rs.getString("mail"),
-                rs.getString("mdp"),
-                rs.getString("role"),
+                rs.getString("password"),
+                rs.getString("roles"),
                 rs.getString("image"),
                 rs.getInt("age"),
                 rs.getString("sexe")

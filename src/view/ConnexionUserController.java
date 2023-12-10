@@ -87,28 +87,20 @@ private void cnx(ActionEvent event) {
             id_modif=id;
             role = su.readById(id).getRole();
             switch (role) {
-            case "ADMIN":
+            case "[\"ROLE_ADMIN\"]":
                 alert.setAlertType(Alert.AlertType.INFORMATION);
                 alert.setContentText("Admin connecté");
                 alert.show();
                 page = "AllAdmin.fxml" ;
                 break;
            
-            case "CLIENT":
+            case "[\"ROLE_CLIENT\"]":
                 alert.setAlertType(Alert.AlertType.INFORMATION);
                 alert.setContentText("Client connecté");
                 alert.show();
                 page = "HomeUser.fxml" ;
                 
                 break;
-            case "MANAGER":
-                alert.setAlertType(Alert.AlertType.INFORMATION);
-                alert.setContentText("Manager connecté");
-                alert.show();
-                page = "HomeUser.fxml" ;
-                
-                break;
-
             }
             try {  
             Parent page1 = FXMLLoader.load(getClass().getResource(page));

@@ -54,8 +54,8 @@ public class AddUserController implements Initializable {
     private PasswordField tf_ajout_cfrmmdp;
     @FXML
     private TextField tf_ajout_age;
-    @FXML
-    private ComboBox<String> cb_ajout_rl;
+   // @FXML
+    //private ComboBox<String> cb_ajout_rl;
     @FXML
     private ComboBox<String> cb_ajout_sx;
     
@@ -82,15 +82,15 @@ public class AddUserController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
        
         // TODO
-           ObservableList<String> list = FXCollections.observableArrayList("CLIENT","MANAGER");
-           cb_ajout_rl.setItems(list);
-           cb_ajout_rl.setValue("CLIENT");
+         //  ObservableList<String> list = FXCollections.observableArrayList("CLIENT","MANAGER");
+           //cb_ajout_rl.setItems(list);
+           //cb_ajout_rl.setValue("CLIENT");
            
-           ObservableList<String> listS = FXCollections.observableArrayList("FEMME","HOMME");
+           ObservableList<String> listS = FXCollections.observableArrayList("male","female");
            cb_ajout_sx.setItems(listS);
-           cb_ajout_sx.setValue("HOMME");
+           cb_ajout_sx.setValue("male");
            
-        ImagePath = "C:\\Users\\ASUS\\Desktop\\XperienceZoneAPP-Gestion-des-equipements\\pidev hooligans\\src\\view/Profile.jpg";
+        ImagePath = "C:\\Users\\ANIS\\Desktop\\PI_JAVA\\pidev-hooligans\\src\\view/Profile.jpg";
         ImagePreviw.setImage(new Image(new File(ImagePath).toURI().toString()));
 
             }
@@ -103,7 +103,7 @@ public class AddUserController implements Initializable {
         String mdp1 = tf_ajout_mdp.getText();
         String mdp2 = tf_ajout_cfrmmdp.getText();
         String age1 = tf_ajout_age.getText();
-        String role1 = cb_ajout_rl.getSelectionModel().getSelectedItem();
+      //  String role1 = cb_ajout_rl.getSelectionModel().getSelectedItem();
         String sexe = cb_ajout_sx.getSelectionModel().getSelectedItem();
 
             
@@ -174,7 +174,7 @@ public class AddUserController implements Initializable {
             u.setMail(tf_ajout_email.getText());
             u.setMdp(mdp1);
             u.setAge(Integer.parseInt(age1));
-            u.setRole(role1);
+            u.setRole("[\"ROLE_CLIENT\"]");
             u.setSexe(sexe);
             u.setImage(ImagePath);
 
@@ -222,7 +222,7 @@ public class AddUserController implements Initializable {
     @FXML
     private void add_image_action(ActionEvent event) throws IOException {
         FileChooser fc = new FileChooser();
-        File defaultDir = new File("C:/Users/ASUS/Desktop/");
+        File defaultDir = new File("C:\\Users\\ANIS\\Documents");
         fc.setInitialDirectory(defaultDir);
         File SelectedFile = fc.showOpenDialog(null);
 

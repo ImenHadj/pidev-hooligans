@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.List;
 import classes.User;
+import com.sun.rowset.internal.Row;
+import javafx.scene.control.Cell;
 import javafx.scene.control.TableView;
 import javafx.stage.FileChooser;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -40,8 +42,9 @@ public class ExcelSender {
             // Add data rows
             for (int i = 0; i < data.size(); i++) {
                 Row row = sheet.createRow(i + 1); // Start from row 1 (skip header)
-
+                
                 User user = data.get(i);
+               // String[] roleArray = user.getRole();
                 String[] values = {
                     user.getUsername(),
                     user.getMail(),

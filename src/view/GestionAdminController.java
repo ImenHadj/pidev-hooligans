@@ -109,7 +109,7 @@ public class GestionAdminController implements Initializable {
         col_username.setCellValueFactory(new PropertyValueFactory<>("username"));
         col_email.setCellValueFactory(new PropertyValueFactory<>("mail"));
         col_mdp.setCellValueFactory(new PropertyValueFactory<>("mdp"));
-        col_role.setCellValueFactory(new PropertyValueFactory<>("role"));
+        col_role.setCellValueFactory(new PropertyValueFactory<>("roles"));
         col_age.setCellValueFactory(new PropertyValueFactory<>("age"));
         col_sexe.setCellValueFactory(new PropertyValueFactory<>("Sexe"));
         col_img.setCellValueFactory(new PropertyValueFactory<>("image"));
@@ -123,7 +123,7 @@ public class GestionAdminController implements Initializable {
           ObservableList<String> list = FXCollections.observableArrayList("username","email","age");
            cb_sortButton.setItems(list);
            
-           ObservableList<String> list1 = FXCollections.observableArrayList("femme","homme","admin","manager","client");
+           ObservableList<String> list1 = FXCollections.observableArrayList("male","female","admin","client");
            cb_btnFiltre.setItems(list1);
            
             ObservableList<String> searchAttributes = FXCollections.observableArrayList("mail", "username");
@@ -275,7 +275,7 @@ private void searchauto() {
     col_username.setCellValueFactory(new PropertyValueFactory<>("username"));
     col_email.setCellValueFactory(new PropertyValueFactory<>("mail"));
     col_mdp.setCellValueFactory(new PropertyValueFactory<>("mdp"));
-    col_role.setCellValueFactory(new PropertyValueFactory<>("role"));
+    col_role.setCellValueFactory(new PropertyValueFactory<>("roles"));
     col_age.setCellValueFactory(new PropertyValueFactory<>("age"));
     col_sexe.setCellValueFactory(new PropertyValueFactory<>("sexe"));
     col_img.setCellValueFactory(new PropertyValueFactory<>("image"));
@@ -332,18 +332,18 @@ private void filtreData(ActionEvent event) {
         String selectedFilterOption = (String) selectedItem;
 
         switch (selectedFilterOption) {
-            case "femme":
+            case "female":
                 {
                     List<User> filteredData = userList.stream()
-                            .filter(user -> "FEMME".equals(user.getSexe()))
+                            .filter(user -> "female".equals(user.getSexe()))
                             .collect(Collectors.toList());
                     updateTableView(filteredData);
                     break;
                 }
-            case "homme":
+            case "male":
                 {
                     List<User> filteredData = userList.stream()
-                            .filter(user -> "HOMME".equals(user.getSexe()))
+                            .filter(user -> "male".equals(user.getSexe()))
                             .collect(Collectors.toList());
                     updateTableView(filteredData);
                     break;
@@ -351,23 +351,23 @@ private void filtreData(ActionEvent event) {
             case "admin":
                 {
                     List<User> filteredData = userList.stream()
-                            .filter(user -> "ADMIN".equals(user.getRole()))
+                            .filter(user -> "[\"ROLE_ADMIN\"]".equals(user.getRole()))
                             .collect(Collectors.toList());
                     updateTableView(filteredData);
                     break;
                 }
-            case "manager":
+          /*  case "manager":
                 {
                     List<User> filteredData = userList.stream()
                             .filter(user -> "MANAGER".equals(user.getRole()))
                             .collect(Collectors.toList());
                     updateTableView(filteredData);
                     break;
-                }
+                }*/
             case "client":
                 {
                     List<User> filteredData = userList.stream()
-                            .filter(user -> "CLIENT".equals(user.getRole()))
+                            .filter(user -> "[\"ROLE_CLIENT\"]".equals(user.getRole()))
                             .collect(Collectors.toList());
                     updateTableView(filteredData);
                     break;
